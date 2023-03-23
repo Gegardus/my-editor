@@ -2,7 +2,8 @@ class QuotesController < ApplicationController
 before_action :set_quote, only: [:show, :edit, :update, :destroy]
 
   def index
-    @quotes = Quote.ordered
+    @quotes = current_company.quotes.ordered
+    # @quotes = Quote.ordered
   end
 
   def show
@@ -13,7 +14,8 @@ before_action :set_quote, only: [:show, :edit, :update, :destroy]
   end
 
   def create
-    @quote = Quote.new(quote_params)
+    @quote = current_company.quotes.build(quote_params)
+    # @quote = Quote.new(quote_params)
 
     if @quote.save
       respond_to do |format|
@@ -48,7 +50,8 @@ before_action :set_quote, only: [:show, :edit, :update, :destroy]
   private
 
   def set_quote
-    @quote = Quote.find(params[:id])
+    @quote = current_company.quotes.find(params[:id])
+    # @quote = Quote.find(params[:id])   
   end
 
   def quote_params
