@@ -7,6 +7,7 @@ before_action :set_quote, only: [:show, :edit, :update, :destroy]
   end
 
   def show
+    @line_item_dates = @quote.line_item_dates.ordered
   end
 
   def new
