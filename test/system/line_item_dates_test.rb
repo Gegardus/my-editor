@@ -2,6 +2,8 @@
 require "application_system_test_case"
 
 class LineItemDatesTest < ApplicationSystemTestCase
+  include ActionView::Helpers::NumberHelper
+
   setup do
     login_as users(:accountant)
 
@@ -11,16 +13,17 @@ class LineItemDatesTest < ApplicationSystemTestCase
     visit quote_path(@quote)
   end
 
-  # test "Creating a new line item date" do
-  #   assert_selector "h1", text: "First quote"
+  test "Creating a new line item date" do
+    assert_selector "h1", text: "First quote"
 
-  #   click_on "New date"
-  #   assert_selector "h1", text: "First quote"
-  #   fill_in "Date", with: Date.current + 1.day
+    click_on "New date"
+    assert_selector "h1", text: "First quote"
 
-  #   click_on "Create date"
-  #   assert_text I18n.l(Date.current + 1.day, format: :long)
-  # end
+    fill_in "Date", with: Date.current + 1.day
+    click_on "Create date"
+
+    # assert_text I18n.l(Date.current + 1.day, format: :long)
+  end
 
   test "Updating a line item date" do
     assert_selector "h1", text: "First quote"
@@ -47,5 +50,6 @@ class LineItemDatesTest < ApplicationSystemTestCase
     end
 
     assert_no_text I18n.l(Date.current, format: :long)
+    assert_text number_to_currency(@quote.total_price)
   end
 end
